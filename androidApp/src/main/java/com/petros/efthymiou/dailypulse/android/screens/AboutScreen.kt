@@ -1,13 +1,17 @@
-package com.petros.efthymiou.dailypulse.android
+package com.petros.efthymiou.dailypulse.android.screens
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Divider
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.DividerDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -19,9 +23,10 @@ import com.petros.efthymiou.dailypulse.Platform
 
 @Composable
 fun AboutScreen(
+    onUpButtonClick:() -> Unit
 ) {
     Column {
-        Toolbar()
+        Toolbar(onUpButtonClick)
         ContentView()
     }
 }
@@ -29,14 +34,23 @@ fun AboutScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 private fun Toolbar(
+    onUpButtonClick: () -> Unit
 ) {
     TopAppBar(
         title = { Text(text = "About Device") },
+        navigationIcon = {
+            IconButton(onClick = onUpButtonClick) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = "Up Button",
+                )
+            }
+        }
     )
 }
 
 @Composable
-private fun ContentView() {
+private fun ContentView(){
     val items = makeItems()
 
     LazyColumn(
@@ -75,5 +89,5 @@ private fun RowView(
             style = MaterialTheme.typography.bodyLarge,
         )
     }
-    Divider()
+    HorizontalDivider(Modifier, DividerDefaults.Thickness, DividerDefaults.color)
 }
